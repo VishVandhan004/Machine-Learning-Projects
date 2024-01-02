@@ -1,0 +1,52 @@
+In this project, we will find out whether the person is diabetic or not using some characteristics like BP, Sugar, Glucose, etc.
+
+This is a classification Problem.
+
+The code provided is for predicting diabetes using a support vector machine (SVM) classifier. Here is an explanation of each line of code:
+
+import pandas as pd`: Imports the pandas library for data manipulation and analysis.
+import numpy as np`: Imports the numpy library for numerical computations.
+from sklearn.preprocessing import StandardScaler`: Imports the StandardScaler class from scikit-learn, which is used to standardize the data.
+from sklearn.model_selection import train_test_split`: Imports the train_test_split function from scikit-learn, which is used to split the data into training and testing sets.
+from sklearn import svm`: Imports the svm module from scikit-learn, which contains the support vector machine classifier.
+from sklearn.metrics import accuracy_score`: Imports the accuracy_score function from scikit-learn, which is used to calculate the accuracy of the model.
+df = pd.read_csv('diabetes.csv')`: Reads the diabetes dataset from a CSV file and stores it in a pandas DataFrame called `df`.
+df.head()`: Displays the first few rows of the DataFrame.
+df.shape`: Returns the shape of the DataFrame, which is the number of rows and columns.
+df.describe()`: Generates descriptive statistics of the DataFrame, including count, mean, standard deviation, minimum, maximum, and quartiles.
+df['Outcome'].value_counts()`: Counts the number of occurrences of each unique value in the 'Outcome' column, which represents the target variable.
+X = df.drop(columns='Outcome',axis=1)`: Creates a new DataFrame `X` by dropping the 'Outcome' column from `df`.
+y = df['Outcome']`: Creates a Series `y` containing the values from the 'Outcome' column.
+scaler = StandardScaler()`: Creates an instance of the StandardScaler class.
+scaler.fit(X)`: Computes the mean and standard deviation of each feature in `X` and stores them in the scaler object.
+standardized_data = scaler.transform(X)`: Standardizes the features in `X` using the computed mean and standard deviation.
+X = standardized_data`: Assigns the standardized data back to `X`.
+X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.2)`: Splits the data into training and testing sets, with 80% of the data used for training and 20% for testing.
+X_train.shape`: Returns the shape of the training set, which is the number of samples and features.
+X_test.shape`: Returns the shape of the testing set, which is the number of samples and features.
+clf = svm.SVC(kernel='linear')`: Creates an instance of the SVM classifier with a linear kernel.
+clf.fit(X_train,y_train)`: Trains the SVM classifier on the training data.
+X_train_prediction = clf.predict(X_train)`: Makes predictions on the training data using the trained classifier.
+accuracy_score(X_train_prediction,y_train)`: Calculates the accuracy of the predictions on the training data.
+X_test_prediction = clf.predict(X_test)`: Makes predictions on the testing data.
+accuracy_score(X_test_prediction,y_test)`: Calculates the accuracy of the predictions on the testing data.
+input_sample = (5,166,72,19,175,22.7,0.6,51)`: Defines an input sample as a tuple of values.
+input_np_array = np.asarray(input_sample)`: Converts the input sample to a numpy array.
+input_np_array_reshaped = input_np_array.reshape(1,-1)`: Reshapes the input array to have a single sample and the same number of features as the training data.
+std_data = scaler.transform(input_np_array_reshaped)`: Standardizes the input data using the same mean and standard deviation as the training data.
+std_dataprediction = clf.predict(std_data)`: Makes a prediction on the standardized input data using the trained classifier.
+prediction`: The predicted outcome of the input sample.
+if (prediction==0):`: Checks if the predicted outcome is 0 (non-diabetic).
+print("Person is not diabetic")`: Prints a message indicating that the person is not diabetic.
+else:print("Person is diabetic")`: Prints a message indicating that the person is diabetic.
+
+This code performs the following steps:
+Reads the diabetes dataset from a CSV file.
+Splits the data into features (X) and the target variable (y).
+Standardizes the features using the StandardScaler.
+Splits the standardized data into training and testing sets.
+Creates an SVM classifier with a linear kernel.
+Trains the classifier on the training data and evaluates its accuracy.
+Makes predictions on the testing data and evaluates its accuracy.
+Uses the trained classifier to make predictions on a new input sample and prints the predicted outcome.
+The code assumes that the diabetes dataset is stored in a file named 'diabetes.csv' and that the columns are in the same order as the input sample.
